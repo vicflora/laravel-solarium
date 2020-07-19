@@ -1,0 +1,29 @@
+{
+    "name": "tsterker/solarium",
+    "description": "Laravel Manager for Solarium",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tim Sterker",
+            "email": "t.sterker@gmail.com"
+        }
+    ],
+    "require": {
+        "solarium/solarium": "^6.0",
+        "graham-campbell/manager": "^4.5",
+        "symfony/event-dispatcher": "^4.4 || ^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "TSterker\\Solarium\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TSterker\\Solarium\\SolariumServiceProvider"
+            ]
+        }
+    }
+}
