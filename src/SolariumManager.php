@@ -9,6 +9,9 @@ use Illuminate\Contracts\Config\Repository;
 use InvalidArgumentException;
 use Solarium\Client;
 
+/**
+ * @mixin Client
+ */
 class SolariumManager extends AbstractManager
 {
 
