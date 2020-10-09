@@ -14,7 +14,7 @@ Once installed, if you are not using automatic package discovery, then you need 
 You can also optionally alias our facade:
 
 ```php
-        'Solarium' => TSterker\Solarium\Facades\GitHub::class,
+        'Solarium' => TSterker\Solarium\Facades\Solarium::class,
 ```
 
 # Configuration
