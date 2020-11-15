@@ -6,6 +6,8 @@ namespace TSterker\Solarium;
 
 use Illuminate\Support\ServiceProvider;
 use Solarium\Client;
+use Solarium\Core\Client\Adapter\AdapterInterface;
+use Solarium\Core\Client\Adapter\Curl;
 
 class SolariumServiceProvider extends ServiceProvider
 {
@@ -42,15 +44,25 @@ class SolariumServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerAdapter();
         $this->registerFactory();
         $this->registerManager();
         $this->registerBindings();
     }
 
+    protected function registerAdapter(): void
+    {
+        $this->app->singleton('solarium.adapter', function ($app) {
+            return new Curl;
+        });
+
+        $this->app->alias('solarium.adapter', AdapterInterface::class);
+    }
+
     protected function registerFactory(): void
     {
         $this->app->singleton('solarium.factory', function ($app) {
-            return new SolariumFactory;
+            return new SolariumFactory($app['solarium.adapter']);
         });
 
         $this->app->alias('solarium.factory', SolariumFactory::class);
