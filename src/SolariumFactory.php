@@ -6,11 +6,19 @@ namespace TSterker\Solarium;
 
 use InvalidArgumentException;
 use Solarium\Client;
-use Solarium\Core\Client\Adapter\Curl;
+use Solarium\Core\Client\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SolariumFactory
 {
+
+    /** @var AdapterInterface */
+    protected $adapter;
+
+    public function __construct(AdapterInterface $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * @param mixed[] $config
@@ -19,7 +27,6 @@ class SolariumFactory
      */
     public function make(array $config): Client
     {
-        $adapter = new Curl;
         $eventDispatcher = new EventDispatcher;
 
         if (!isset($config['host'])) {
@@ -34,8 +41,8 @@ class SolariumFactory
             throw new InvalidArgumentException('A path must be specified.');
         }
 
-        if (method_exists($adapter, 'setTimeout') && isset($config['timeout'])) {
-            $adapter->setTimeout($config['timeout']);
+        if (method_exists($this->adapter, 'setTimeout') && isset($config['timeout'])) {
+            $this->adapter->setTimeout($config['timeout']);
         }
 
         $config = [
@@ -44,6 +51,6 @@ class SolariumFactory
             ],
         ];
 
-        return new Client($adapter, $eventDispatcher, $config);
+        return new Client($this->adapter, $eventDispatcher, $config);
     }
 }

@@ -103,3 +103,24 @@ class Searcher
 
 app(Searcher::class)->all();
 ```
+
+# Change Http Adapter
+
+By default the package uses the `Curl` adapter. In order to use a different adapter, just register it in your `AppServiceProvider`.
+
+e.g. to use the [Symphony PSR-18 HTTP Client](https://symfony.com/doc/current/http_client.html#psr-18-and-psr-17), first install the dependencies
+
+```sh
+composer require psr/http-client
+composer require nyholm/psr7
+composer require symfony/http-client
+```
+
+And then register the Solarium `Psr18Adapter`:
+
+```php
+$this->app->singleton('solarium.adapter', function () {
+    $factory = new Psr17Factory();
+    return new Psr18Adapter(new Psr18Client(), $factory, $factory);
+});
+```
