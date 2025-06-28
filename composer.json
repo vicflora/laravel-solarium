@@ -1,5 +1,5 @@
 {
-    "name": "tsterker/solarium",
+    "name": "vicflora/laravel-solarium",
     "description": "Laravel Manager for Solarium",
     "license": "MIT",
     "type": "library",
